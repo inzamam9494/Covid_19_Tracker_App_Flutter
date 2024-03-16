@@ -38,78 +38,81 @@ class _WorldStatesScreenState extends State<WorldStatesScreen>
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .01,
-              ),
-              FutureBuilder(
-                  future: stateServices.fetchWorldStateModel(),
-                  builder: (context,AsyncSnapshot<WorldStatesModel>snapshot){
-                    if(!snapshot.hasData){
-                      return Expanded(
-                        flex: 1,
-                          child: SpinKitCircle(
-                            controller: _controller,
-                            color: Colors.white,
-                            size: 50,
-                          ));
-                    }else{
-                      return Column(
-                        children: [
-                          PieChart(
-                            dataMap:  {
-                              'Total': double.parse(snapshot.data!.data!.summary!.total.toString()),
-                              'Recovered': double.parse(snapshot.data!.data!.summary!.discharged.toString()),
-                              'Death': double.parse(snapshot.data!.data!.summary!.deaths.toString()),
-                            },
-                            chartValuesOptions: const ChartValuesOptions(
-                              showChartValuesInPercentage: true
-                            ),
-                            chartRadius: MediaQuery.of(context).size.width / 3.2,
-                            legendOptions:
-                            const LegendOptions(legendPosition: LegendPosition.left),
-                            animationDuration: const Duration(seconds: 3),
-                            chartType: ChartType.ring,
-                            colorList: colorList,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: MediaQuery.of(context).size.height * 0.05),
-                            child: Card(
-                              child: Column(
-                                children: [
-                                  ReusableRow(title: 'Total', value: snapshot.data!.data!.summary!.total.toString()),
-                                  ReusableRow(title: 'India Case', value: snapshot.data!.data!.summary!.confirmedCasesIndian.toString()),
-                                  ReusableRow(title: 'Recovered', value: snapshot.data!.data!.summary!.discharged.toString()),
-                                  ReusableRow(title: 'Deaths', value: snapshot.data!.data!.summary!.deaths.toString()),
-                                ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .01,
+                ),
+                FutureBuilder(
+                    future: stateServices.fetchWorldStateModel(),
+                    builder: (context,AsyncSnapshot<WorldStatesModel>snapshot){
+                      if(!snapshot.hasData){
+                        return Expanded(
+                          flex: 1,
+                            child: SpinKitCircle(
+                              controller: _controller,
+                              color: Colors.white,
+                              size: 50,
+                            ));
+                      }else{
+                        return Column(
+                          children: [
+                            PieChart(
+                              dataMap:  {
+                                'Total': double.parse(snapshot.data!.data!.summary!.total.toString()),
+                                'Recovered': double.parse(snapshot.data!.data!.summary!.discharged.toString()),
+                                'Death': double.parse(snapshot.data!.data!.summary!.deaths.toString()),
+                              },
+                              chartValuesOptions: const ChartValuesOptions(
+                                showChartValuesInPercentage: true
                               ),
+                              chartRadius: MediaQuery.of(context).size.width / 3.2,
+                              legendOptions:
+                              const LegendOptions(legendPosition: LegendPosition.left),
+                              animationDuration: const Duration(seconds: 3),
+                              chartType: ChartType.ring,
+                              colorList: colorList,
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const CityListScreen()));
-                            },
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff05be54),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: const Center(
-                                child: Text(
-                                  'Track  ',
-                                  style: TextStyle(
-                                      color: Colors.white, fontWeight: FontWeight.bold),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: MediaQuery.of(context).size.height * 0.05),
+                              child: Card(
+                                child: Column(
+                                  children: [
+                                    ReusableRow(title: 'Total', value: snapshot.data!.data!.summary!.total.toString()),
+                                    ReusableRow(title: 'India Case', value: snapshot.data!.data!.summary!.confirmedCasesIndian.toString()),
+                                    ReusableRow(title: 'Recovered', value: snapshot.data!.data!.summary!.discharged.toString()),
+                                    ReusableRow(title: 'Deaths', value: snapshot.data!.data!.summary!.deaths.toString()),
+                                  ],
                                 ),
                               ),
                             ),
-                          )
-                        ],
-                      );
-                    }
-                  }),
-            ],
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const CityListScreen()));
+                              },
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff05be54),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: const Center(
+                                  child: Text(
+                                    'Track  ',
+                                    style: TextStyle(
+                                        color: Colors.white, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                    }),
+              ],
+            ),
           ),
         ),
       ),
