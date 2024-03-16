@@ -11,7 +11,7 @@ Covid Tracker App for Understanding a basic REST API concept in flutter
 #### Get all items
 
 ```http
-  GET https://api.rootnet.in/covid19-in/stats/latest
+   https://api.rootnet.in/covid19-in/stats/latest
 ```
 
 
