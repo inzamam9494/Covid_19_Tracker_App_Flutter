@@ -65,7 +65,7 @@ class _CityListScreenState extends State<CityListScreen> {
                             child: Column(
                               children: [ListTile(
                                 title: Container(height: 10, width: 89, color: Colors.white),
-                                subtitle: Container(height: 10, width: 89, color: Colors.white),
+                                subtitle: Container(height: 12, width: 89, color: Colors.white),
                               ),
                               ],
                             )
